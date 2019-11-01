@@ -7,7 +7,9 @@ Add your code below the TO-DO statement and include necessary import statements.
 import sys
 import csv
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.preprocessing import OrdinalEncoder
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
+import numpy as np
 
 def main():
     
@@ -55,16 +57,64 @@ def main():
         labels = listColUniqueVals[-1]
         
         # calculate the level 1 decision tree for the feature & compute the training error
-        computeDecisionTree(feature, listData, featCol, labels)
+        computeDecisionTree(feature, listData, featCol, labels, listColNames)
 
     # Construct a full decision tree on the dataset and compute the training error
     # TO-DO: add your code here
+    computeFullDecisionTree(listData, labels, listColNames)
     
-
     return None
 
+# compute a full decision tree based on the data and display the calculated error rate
+def computeFullDecisionTree(samples, labels, features):
+    # encode our data using sklearn's labelEncoder
+    enc_samples, enc_labels = encodeData(samples, labels, features)
+
+    # create a decision tree calssifier and fit it to our training samples
+    dt = DecisionTreeClassifier()
+    dt.fit(enc_samples, enc_labels)
+
+    # get predictions for our training data
+    predictions = dt.predict(enc_samples)
+
+    # compute the accuracy of our full decision tree predictions vs known labels
+    accuracy = accuracy_score(enc_labels, predictions)
+
+    # compute the error rate as 1 - the accuracy
+    errorRate = 1 - accuracy
+
+    # display the error rate
+    print("Full Decision Tree:")
+    print("\tTraining Error Rate: " + str(errorRate))
+    
+def encodeData(samples, labels, features):
+    # create a label encoder object
+    labelEncoder = LabelEncoder()
+
+    # convert our list matrix to numpy array
+    samples = np.array(samples)
+
+    # transpose the matrix so each feature is a row (features x row)
+    samples = np.transpose(samples)
+
+    # loop through each feature of our matrix
+    for index, feature in enumerate(samples):
+        # encode the current feature for every sample
+        samples[index]=labelEncoder.fit_transform(feature)
+
+    # seperate our labels from each sample
+    labels = samples[-1]
+    samples = samples[:-1]
+
+    # revert our matrix to be samples x features
+    samples = np.transpose(samples)
+    labels = np.transpose(labels)
+    
+    # return our encoded matrix
+    return(samples, labels)
+
 # compute the level 1 decision tree and display the error rate
-def computeDecisionTree(feature, data, featCol, labels):
+def computeDecisionTree(feature, data, featCol, labels, listColNames):
     # get the index of our class label
     classIndex = len(data[0]) - 1
 
@@ -88,14 +138,15 @@ def computeDecisionTree(feature, data, featCol, labels):
     # compute the error rate of the level 1 decision tree
     errorRate = calcErrorRate(labelMap, catDicts, feature, len(data))
 
-    # print our level 1 decision tree error rates
-    print("Feature [" + str(featCol) + "]")
+    # debugging statements
     #for dict_a in catDicts:
     #    print("\tlabel: " + dict_a)
     #    print("\t\t" + str(catDicts[dict_a]))
-
     #print(labelMap)
-    print("\tError Rate: " + str(errorRate) + "\n")
+
+    # print our level 1 decision tree error rates
+    print("Feature [" + listColNames[featCol] + "]")
+    print("\tTraining Error Rate: " + str(errorRate) + "\n")
         
 # calculate the error rate for the level 1 decision tree
 def calcErrorRate(labelMap, catDicts, feature, dataCount):
