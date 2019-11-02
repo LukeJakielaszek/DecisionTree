@@ -1,0 +1,54 @@
+breast_cancer.csv
+
+Feature [age]
+	Training Error Rate: 0.2972027972027972
+
+Feature [menopause]
+	Training Error Rate: 0.2972027972027972
+
+Feature [tumor-size]
+	Training Error Rate: 0.2972027972027972
+
+Feature [inv-nodes]
+	Training Error Rate: 0.2727272727272727
+
+Feature [node-caps]
+	Training Error Rate: 0.27622377622377625
+
+Feature [deg-malig]
+	Training Error Rate: 0.2797202797202797
+
+Feature [breast]
+	Training Error Rate: 0.2972027972027972
+
+Feature [breast-quad]
+	Training Error Rate: 0.29370629370629375
+
+Feature [irradiat]
+	Training Error Rate: 0.2972027972027972
+
+Full Decision Tree:
+	Training Error Rate: 0.020979020979020935
+
+titanic_train.csv
+
+Feature [First_class]
+	Training Error Rate: 0.3249299719887955
+
+Feature [Sex]
+	Training Error Rate: 0.21988795518207283
+
+Feature [Age]
+	Training Error Rate: 0.4061624649859944
+
+Feature [SibSp]
+	Training Error Rate: 0.4061624649859944
+
+Feature [ParCh]
+	Training Error Rate: 0.3851540616246498
+
+Feature [Embarked]
+	Training Error Rate: 0.3837535014005602
+
+Full Decision Tree:
+	Training Error Rate: 0.20308123249299714
