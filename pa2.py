@@ -60,7 +60,6 @@ def main():
         computeDecisionTree(feature, listData, featCol, labels, listColNames)
 
     # Construct a full decision tree on the dataset and compute the training error
-    # TO-DO: add your code here
     computeFullDecisionTree(listData, labels, listColNames)
     
     return None
@@ -137,12 +136,6 @@ def computeDecisionTree(feature, data, featCol, labels, listColNames):
 
     # compute the error rate of the level 1 decision tree
     errorRate = calcErrorRate(labelMap, catDicts, feature, len(data))
-
-    # debugging statements
-    #for dict_a in catDicts:
-    #    print("\tlabel: " + dict_a)
-    #    print("\t\t" + str(catDicts[dict_a]))
-    #print(labelMap)
 
     # print our level 1 decision tree error rates
     print("Feature [" + listColNames[featCol] + "]")
